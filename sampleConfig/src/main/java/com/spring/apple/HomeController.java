@@ -1,0 +1,230 @@
+package com.spring.apple;
+
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.mybatis.spring.SqlSessionTemplate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.spring.apple.model.InputVO;
+
+/**
+ * Handles requests for the application home page.
+ */
+@Controller
+public class HomeController {
+	
+	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	
+	
+	@Autowired
+	SqlSessionTemplate session;
+	
+	
+	@Resource(name="testVO")
+	private SampleVO sample;
+	
+	
+	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	
+	
+	/*
+	 * 	'/'apple'/'main.do
+	 * 	메인페이지 호출
+	 * 	parameter : X 
+	 */
+	@RequestMapping(value = "/main", method = RequestMethod.GET)
+	public String home(HttpServletRequest request) {
+		System.out.println("Main Page is loaded.");
+		
+		return "home";
+	}
+	
+	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	/*
+	 *		!! <form> 태그를 통해 전송한 데이터를 서버측에서 입력받는 다양한 방법들 !!
+	 */
+	
+	
+	/*	전통적인 방법 - HttpServletRequest
+	 * 	Example Form1 에서 호출
+	 * 	parameter : String input1 or InputVO
+	 * 
+	 */
+	/*@RequestMapping(value = "/inputExample", method = RequestMethod.GET)
+	public String	inputExample(HttpServletRequest request) {
+		System.out.println("InputExample :: .getParameter('input1') :: " + request.getParameter("input1"));
+		
+		return "redirect:main.do";
+	}*/
+	
+	/*	방법 1 - VO에 매핑
+	 * 	Example Form1 에서 호출
+	 * 	parameter : String input1 or InputVO
+	 * 
+	 */
+	@RequestMapping(value = "/inputExample", method = RequestMethod.GET)
+	public String	inputExample(InputVO vo) {
+		System.out.println("InputExample :: InputVO :: " + vo.getInput1());
+		
+		return "redirect:main.do";
+	}
+	
+	/*	방법 2 - RequestParam 어노테이션
+	 * 	Example Form1 에서 호출
+	 * 	parameter : String input1 or InputVO
+	 * 
+	 */
+	/*@RequestMapping(value = "/inputExample", method = RequestMethod.GET)
+	public String	inputExample(@RequestParam("input1") String parameter) {
+		System.out.println("InputExample :: parameter :: " + parameter);
+		
+		return "redirect:main.do";
+	}*/
+	
+	/*	방법 3 - RequestParam 어노테이션 + Map 
+	 * 	Example Form1 에서 호출
+	 * 	parameter : String input1 or InputVO
+	 * 
+	 */
+	/*@RequestMapping(value = "/inputExample", method = RequestMethod.GET)
+	public String	inputExample(@RequestParam Map<String, String> map) {
+		System.out.println("InputExample :: .get('input1') :: " + map.get("input1"));
+		
+		return "redirect:main.do";
+	}*/
+	
+	
+	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	
+	@RequestMapping(value="/saveImage" ,method = RequestMethod.POST)
+	public String saveImage(@RequestParam("imgFile") MultipartFile file) {
+		System.out.println("saveImage :: File :: " + file.getName());
+		//System.out.println("saveImage :: File :: Type :: " + file.getContentType());
+		
+		try {
+			FileOutputStream fos = new FileOutputStream("C:\\SpringResource\\" + file.getOriginalFilename());
+			byte[] bytes = file.getBytes();
+			
+			fos.write(bytes);
+			
+			fos.close();
+			
+		
+		}catch(Exception e) {
+			System.out.println("saveImage :: Exception Occurs.");
+		}
+		
+		
+	    return "redirect:main.do";
+	}
+	
+	@RequestMapping(value="/getImage")
+	public void getImage(HttpServletResponse res) throws Exception{
+		System.out.println("getImage :: ");
+		String realFile = "C:\\SpringResource\\";
+		String fileName = "imgFile";
+		String ext = "jpg";
+		
+		BufferedOutputStream out = null;
+		InputStream in = null;
+		
+		try {
+			
+			res.setContentType("image/" + ext);
+			res.setHeader("Content-Disposition", "inline;filename=" + fileName);
+			File file = new File(realFile + fileName + "." + ext);
+			System.out.println("getImage :: File Path :: " + file.getPath());
+			
+			if(file.exists()) {
+				in = new FileInputStream(file);
+				out = new BufferedOutputStream(res.getOutputStream());
+				int len;
+				byte[] buf = new byte[1024];
+				while((len = in.read(buf)) > 0) {
+					out.write(buf, 0, len);
+				}
+			}
+			
+			
+		}catch(Exception e) {
+			System.out.println("getImage :: Exception occurs.");
+		}finally {
+			if(out != null) {
+				out.flush();
+				out.close();
+			}
+			if(in != null)
+				in.close();
+				
+		}
+		
+	}
+
+		
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	/*
+	 *		AJAX 를 통한 통신에서도 <form>태그를 통한 통신에서와 마찬가지로
+	 * 		1. VO	2. @RequestParam	
+	 * 		등 을 사용해 데이터를 주고받을 수 있다.
+	 * 
+	 */
+	
+	@RequestMapping(value="/ajaxExample")
+	public @ResponseBody Map<String, Object> ajaxExample(@RequestParam("testValue") String parameter){
+		System.out.println("ajaxExample :: parameter :: " + parameter);
+		Map<String, Object> map = new HashMap();
+		
+		try {
+			double retval = (double)Double.parseDouble(parameter);
+			map.put("answer", Math.sqrt(retval));
+		}catch(Exception e) {
+			System.out.println("Number Format is invalid.");
+		}
+		
+		return map;
+	}
+	
+	
+	
+	
+}
