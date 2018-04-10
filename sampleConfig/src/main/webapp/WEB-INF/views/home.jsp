@@ -6,23 +6,15 @@
 <html>
 <head>
 	<title>Home</title>
-	<script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
-	
-	<link rel="stylesheet" href="/apple/resources/css/bootstrap.css" type="text/css">
-	<script src="/apple/resources/js/bootstrap.js"></script>
-	<style>
-		
-	
-	</style>
+	<%@ include file="/WEB-INF/views/common/Header.jsp" %>
 </head>
 <body>
 
 <div class="container">
   <!-- Content here -->
-  
-<h1>Version :: 1</h1>
+ 
+<h1>Version :: 3</h1>
 
-<br>
 <br>
 <br>
 
