@@ -7,9 +7,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	
 	<select id="methodFirst"		parameterType="com.spring.apple.model.APIVO"
 									resultType="com.spring.apple.model.APIVO">
-		SELECT 'APPLE' AS FIRST FROM DUAL;
-		SELECT 'BANANA' AS SECOND FROM DUAL;
-		<!-- SELECT 'BANANA' AS SECOND FROM DUAL -->
+		SELECT 'APPLE' AS FIRST FROM DUAL
 	</select>
 	
 	<select id="methodSecond"		parameterType="com.spring.apple.model.APIVO"
