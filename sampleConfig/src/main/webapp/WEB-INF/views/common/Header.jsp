@@ -15,3 +15,13 @@
 
 <!-- CK Editor 4 -->
 <script src="${CTX}/resources/ckeditor/ckeditor.js"></script>
+
+<style>
+
+@font-face {
+	font-family: 'NanumGothicCoding';
+	src: url("/citron/resources/font/NanumGothicCoding.ttf");
+}
+
+
+</style>
