@@ -1,6 +1,6 @@
 package com.spring.apple.model;
 
-public class APIVO {
+public class APIVO extends BasePage{
 	private String	first;
 	private String	second;
 	public String getFirst() {
