@@ -1,4 +1,4 @@
-package com.spring.apple.common;
+package com.spring.apple.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

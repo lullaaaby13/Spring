@@ -1,4 +1,4 @@
-package com.spring.apple;
+package com.spring.apple.util;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

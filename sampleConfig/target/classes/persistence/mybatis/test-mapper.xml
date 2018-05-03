@@ -4,9 +4,19 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.spring.apple">
-	<select id="test" resultType="com.spring.apple.SampleVO">
-		SELECT * FROM SAMPLE
+	
+	<select id="methodFirst"		parameterType="com.spring.apple.model.APIVO"
+									resultType="com.spring.apple.model.APIVO">
+		SELECT 'APPLE' AS FIRST FROM DUAL;
+		SELECT 'BANANA' AS SECOND FROM DUAL;
+		<!-- SELECT 'BANANA' AS SECOND FROM DUAL -->
 	</select>
+	
+	<select id="methodSecond"		parameterType="com.spring.apple.model.APIVO"
+									resultType="com.spring.apple.model.APIVO">
+		SELECT FOUND_ROWS() AS SECOND
+	</select>
+	
 	
 	<insert id="image" parameterType="java.util.Map">
 		INSERT INTO SAMPLE3 VALUES(#{img})  
@@ -17,4 +27,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	    FROM 	SAMPLE3
 	</select>
 
+	<sql id="">
+	
+	</sql>
 </mapper>

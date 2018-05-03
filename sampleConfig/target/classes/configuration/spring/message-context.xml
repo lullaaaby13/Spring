@@ -11,9 +11,5 @@
  -->
 	<context:property-placeholder location="classpath:/message/properties/testProperties.properties"/>
 
- <bean id="testVO" class="com.spring.apple.SampleVO">
- 	<property name="first" value="${First}"></property>
- 	<property name="second" value="${Second}"></property>
- </bean>
  
 </beans>

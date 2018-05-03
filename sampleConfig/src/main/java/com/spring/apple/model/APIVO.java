@@ -1,6 +1,6 @@
-package com.spring.apple;
+package com.spring.apple.model;
 
-public class SampleVO {
+public class APIVO {
 	private String	first;
 	private String	second;
 	public String getFirst() {
@@ -15,12 +15,12 @@ public class SampleVO {
 	public void setSecond(String second) {
 		this.second = second;
 	}
-	public SampleVO(String first, String second) {
+	public APIVO(String first, String second) {
 		super();
 		this.first = first;
 		this.second = second;
 	}
-	public SampleVO() {
+	public APIVO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}

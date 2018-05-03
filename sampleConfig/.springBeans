@@ -13,7 +13,6 @@
 		<config>src/main/resources/configuration/spring/mvc-context.xml</config>
 	</configs>
 	<autoconfigs>
-		<config>src/main/resources/configuration/servlet-context.xml</config>
 	</autoconfigs>
 	<configSets>
 	</configSets>

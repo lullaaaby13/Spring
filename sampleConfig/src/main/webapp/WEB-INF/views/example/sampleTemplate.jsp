@@ -12,9 +12,34 @@
 
 <div class="container">
 
-<h1>혜연쓰 보고시퍼어!! ㅋㅋㅋㅋ</h1>
-<h1>ㅠㅠㅠㅠ 보고싶다아....</h1>
-<h1>넌 웃을때 예뻐 ^^</h1>
+<h1>Sample Template</h1>
+
+
+
+
+
+
+</div>
+
+<script>
+$(document).ready(function(){
+	
+	$.ajax({
+		url:'${CTX}/example/test',
+		success:function(response){
+			console.log(response.result);
+		}
+			
+	});
+	
+	
+	
+	
+})
+
+
+
+</script>
 
 
 </body>
