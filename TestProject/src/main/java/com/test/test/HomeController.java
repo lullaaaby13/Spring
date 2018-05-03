@@ -24,14 +24,13 @@ public class HomeController {
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
-		logger.info("Welcome home! The client locale is {}.", locale);
 		
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+		System.out.println("Commit Test 1");
 		
-		String formattedDate = dateFormat.format(date);
+		System.out.println("Work At the Test Branch.");
 		
-		model.addAttribute("serverTime", formattedDate );
+		
+		
 		
 		return "home";
 	}
